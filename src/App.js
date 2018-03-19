@@ -3,7 +3,7 @@ import { Navbar } from 'react-bootstrap';
 import { Link, Route, Switch } from 'react-router-dom'
 import './App.css';
 
-import ReportPage from './ReportPage.js';
+import ReportPage from './ReportPage';
 import CreateReportPage from './CreateReportPage';
 
 class App extends Component {
