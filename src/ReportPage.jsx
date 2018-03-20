@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom'
-import { Button } from 'react-bootstrap';
+import { Button } from 'reactstrap';
 
 class ReportPage extends React.Component {
     render() {
         return (
             <div>
                 <Link to='/create-report'>
-                    <Button bsStyle="primary">Create report</Button>
+                    <Button color="primary">Create report</Button>
                 </Link>
                 <ReportList  apiUrl={this.props.apiUrl}/>
             </div>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Navbar } from 'react-bootstrap';
 import { Link, Route, Switch } from 'react-router-dom'
-import './App.css';
+import { Navbar, NavbarBrand } from 'reactstrap';
 
 import ReportPage from './ReportPage';
 import CreateReportPage from './CreateReportPage';
@@ -12,14 +11,12 @@ class App extends Component {
     // apiUrl='http://localhost:8080';
   render() {
     const Header = () => (
-      <Navbar fluid>
-        <Navbar.Header>
-          <Navbar.Brand>
+      <Navbar expand="md" className="bg-light">
+          <NavbarBrand>
             <Link to='/'>
               Home
             </Link>
-          </Navbar.Brand>
-        </Navbar.Header>
+          </NavbarBrand>
       </Navbar>
     );
 

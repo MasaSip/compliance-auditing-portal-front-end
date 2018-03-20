@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {FormGroup, FormControl, HelpBlock, ControlLabel} from 'react-bootstrap';
+import { Form, FormGroup, Label, Input } from 'reactstrap';
 import DatePicker from 'react-date-picker';
 
 class CreateReportPage extends React.Component {
@@ -10,20 +10,6 @@ class CreateReportPage extends React.Component {
             </div>
         )
     }
-}
-
-function FieldGroup({ id, label, help, ...props }) {
-  return (
-    <FormGroup controlId={id}>
-      <ControlLabel>{label}</ControlLabel>
-      <FormControl {...props} />
-        {
-            // && checks both statements and returns the later
-            // thus creates help block only if help text exists
-            help && <HelpBlock>{help}</HelpBlock>
-        }
-    </FormGroup>
-  );
 }
 
 class AddReport extends Component {
@@ -68,14 +54,11 @@ class AddReport extends Component {
     render() {
         return (
             <div>
-                <form>
-                    <FieldGroup
-                        id="licenseeName"
-                        type="text"
-                        label="Licensee name"
-                        placeholder="name"
-                    />
-
+                <Form>
+                    <FormGroup>
+                        <Label for="licenseeName">Licensee Name</Label>
+                        <Input id="licenseeName" placeholder="Name" />
+                    </FormGroup>
                     <FormGroup>
                         <DatePicker
                             todayButton={"Today"}
@@ -84,15 +67,15 @@ class AddReport extends Component {
                             value={this.state.date}
                         />
                     </FormGroup>
-                </form>
-                <form onSubmit={this.handleSubmit}>
+                </Form>
+                <Form onSubmit={this.handleSubmit}>
                     <label>
                         Add new report:
                         <input type="text" value={this.state.value} onChange={this.handleChange} />
                     </label>
                     <input type="submit" value="Submit" />
                     Reload after adding a new report
-                </form>
+                </Form>
             </div>
         );
     }
