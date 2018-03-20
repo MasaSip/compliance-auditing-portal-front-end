@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar } from 'react-bootstrap';
+import { Navbar, NavbarBrand } from 'reactstrap';
 import logo from './logo.svg';
 import ReportPage from './ReportPage.js';
 
@@ -10,13 +10,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Navbar fluid>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <h1 className="App-title">Home</h1>
-            </Navbar.Brand>
-          </Navbar.Header>
-        </Navbar>
+        <Navbar expand="md" className="bg-light">
+          <NavbarBrand><h1>Home</h1></NavbarBrand>
+          </Navbar>
         <div> <ReportPage apiUrl={this.apiUrl}/></div>
       </div>
     );
