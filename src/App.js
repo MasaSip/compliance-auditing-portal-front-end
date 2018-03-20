@@ -12,11 +12,11 @@ class App extends Component {
   render() {
     const Header = () => (
       <Navbar expand="md" className="bg-light">
-          <NavbarBrand>
-            <Link to='/'>
-              Home
-            </Link>
-          </NavbarBrand>
+        <NavbarBrand>
+          <Link to='/'>
+            Home
+          </Link>
+        </NavbarBrand>
       </Navbar>
     );
 
