@@ -3,8 +3,12 @@
 // $body-bg: #000;
 // $body-color: #111;
 
-.App {
-  text-align: center;
+.container {
+  max-width: 960px;
+
+  form.modifyReport {
+    width: 100%;
+  }
 }
 
 // Bootstrap and its default variables

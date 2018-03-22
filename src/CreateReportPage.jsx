@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Form, FormGroup, Label, Input } from 'reactstrap';
+import { Col, Row, Container, Form, FormGroup, Label, Input } from 'reactstrap';
 import DatePicker from 'react-date-picker';
 
 class CreateReportPage extends React.Component {
@@ -10,6 +10,17 @@ class CreateReportPage extends React.Component {
             </div>
         )
     }
+}
+
+function  FieldGroup({ id, type, label, labelFor, placeholder }) {
+    return (
+        <FormGroup row>
+            <Label for={labelFor}sm={3}>{label}</Label>
+                <Col sm={9}>
+                    <Input id={id} type={type} placeholder={placeholder}/>
+                </Col>
+        </FormGroup>
+  );
 }
 
 class AddReport extends Component {
@@ -53,20 +64,65 @@ class AddReport extends Component {
 
     render() {
         return (
-            <div>
-                <Form>
-                    <FormGroup>
-                        <Label for="licenseeName">Licensee Name</Label>
-                        <Input id="licenseeName" placeholder="Name" />
+            <Container>
+                <Form className="modifyReport">
+                    <FieldGroup
+                        id="firstName"
+                        type="text"
+                        label="First Name"
+                        labelFor="firstName"
+                    />
+                    <FieldGroup
+                        id="lastName"
+                        type="text"
+                        label="Last Name"
+                        labelFor="lastName"
+                    />
+                    <FieldGroup
+                        id="licenseeName"
+                        type="text"
+                        label="Licensee Name"
+                        labelFor="licenseeName"
+                    />
+                    <FormGroup row>
+                        <Label for="auditPeriod" sm={3}>Audit Period</Label>
+                        <Col sm={9}>
+                            <DatePicker
+                                todayButton={"Today"}
+                                dateFormat="DD/MM/YYYY"
+                                onChange={this.onDateChange}
+                                value={this.state.date}
+                            />
+                        </Col>
                     </FormGroup>
-                    <FormGroup>
-                        <DatePicker
-                            todayButton={"Today"}
-                            dateFormat="DD/MM/YYYY"
-                            onChange={this.onDateChange}
-                            value={this.state.date}
-                        />
-                    </FormGroup>
+                    <FieldGroup
+                        id="seniorEngineer"
+                        type="email"
+                        label="Senior Engineer"
+                        labelFor="seniorEngineer"
+                        placeholder="Email"
+                    />
+                    <FieldGroup
+                        id="manager"
+                        type="email"
+                        label="Manager"
+                        labelFor="manager"
+                        placeholder="Email"
+                    />
+                    <FieldGroup
+                        id="generalManager"
+                        type="email"
+                        label="General Manager"
+                        labelFor="generalManager"
+                        placeholder="Email"
+                    />
+                    <FieldGroup
+                        id="ceo"
+                        type="email"
+                        label="CEO"
+                        labelFor="ceo"
+                        placeholder="Email"
+                    />
                 </Form>
                 <Form onSubmit={this.handleSubmit}>
                     <label>
@@ -76,7 +132,7 @@ class AddReport extends Component {
                     <input type="submit" value="Submit" />
                     Reload after adding a new report
                 </Form>
-            </div>
+            </Container>
         );
     }
 }
