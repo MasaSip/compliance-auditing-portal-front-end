@@ -3,12 +3,21 @@
 // $body-bg: #000;
 // $body-color: #111;
 
+// Custom scss
 .container {
   max-width: 960px;
 
   form.modifyReport {
     width: 100%;
   }
+}
+
+.btn.btn-space {
+  margin-top: 0.75em;
+}
+.btn.btn-wide {
+  padding-left: 2em;
+  padding-right: 2em;
 }
 
 // Bootstrap and its default variables

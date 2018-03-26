@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Col, Row, Container, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Col, Row, Container, Form, FormGroup, Label, Input } from 'reactstrap';
 import DatePicker from 'react-date-picker';
 
 class CreateReportPage extends React.Component {
@@ -69,23 +69,23 @@ class AddReport extends Component {
                     <FieldGroup
                         id="firstName"
                         type="text"
-                        label="First Name"
+                        label="First name"
                         labelFor="firstName"
                     />
                     <FieldGroup
                         id="lastName"
                         type="text"
-                        label="Last Name"
+                        label="Last name"
                         labelFor="lastName"
                     />
                     <FieldGroup
                         id="licenseeName"
                         type="text"
-                        label="Licensee Name"
+                        label="Licensee name"
                         labelFor="licenseeName"
                     />
                     <FormGroup row>
-                        <Label for="auditPeriod" sm={3}>Audit Period</Label>
+                        <Label for="auditPeriod" sm={3}>Audit period</Label>
                         <Col sm={9}>
                             <DatePicker
                                 todayButton={"Today"}
@@ -98,7 +98,7 @@ class AddReport extends Component {
                     <FieldGroup
                         id="seniorEngineer"
                         type="email"
-                        label="Senior Engineer"
+                        label="Senior engineer"
                         labelFor="seniorEngineer"
                         placeholder="Email"
                     />
@@ -112,7 +112,7 @@ class AddReport extends Component {
                     <FieldGroup
                         id="generalManager"
                         type="email"
-                        label="General Manager"
+                        label="General manager"
                         labelFor="generalManager"
                         placeholder="Email"
                     />
@@ -123,6 +123,18 @@ class AddReport extends Component {
                         labelFor="ceo"
                         placeholder="Email"
                     />
+                    <hr sm={12}/>
+                    <FormGroup row>
+                        <Col sm={{size: 4, offset: 4}} align="center">
+                            <Label for="addAuditedFacility">Add audited facility</Label>
+                            <Input
+                                id="addFacility"
+                                type="text"
+                                placeholder="Name of the facility"
+                            />
+                            <Button color="success" className="btn-space btn-wide">Add</Button>
+                        </Col>
+                    </FormGroup>
                 </Form>
                 <Form onSubmit={this.handleSubmit}>
                     <label>
