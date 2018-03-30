@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
-import { Button, Col, Row, Container, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Col, Container, Form, FormGroup, Label, Input } from 'reactstrap';
 import DatePicker from 'react-date-picker';
+
+import AddFacility from './AddFacility';
+import Facility from './Facility';
 
 class CreateReportPage extends React.Component {
     render() {
@@ -12,15 +15,28 @@ class CreateReportPage extends React.Component {
     }
 }
 
-function  FieldGroup({ id, type, label, labelFor, placeholder }) {
+function FieldGroup({ id, type, label, labelFor, onChange, placeholder }) {
     return (
         <FormGroup row>
             <Label for={labelFor}sm={3}>{label}</Label>
                 <Col sm={9}>
-                    <Input id={id} type={type} placeholder={placeholder}/>
+                    <Input
+                        id={id}
+                        type={type}
+                        placeholder={placeholder}
+                        onChange={onChange}
+                    />
                 </Col>
         </FormGroup>
   );
+}
+
+function FaculityList({facilities, onChange}) {
+    return (
+        Object.values(facilities).map(facility => {
+            return <Facility facility={facility} onChange={onChange} />;
+        })
+    );
 }
 
 class AddReport extends Component {
@@ -28,21 +44,47 @@ class AddReport extends Component {
         super(props);
         this.state = {
             value: '',
-            date: new Date()
+            date: new Date(),
+            facilities: {'example': {'name': 'Example facility'}}
         };
 
         this.handleChange = this.handleChange.bind(this);
+        this.onDateChange = this.onDateChange.bind(this);
+        this.onFacilityChange = this.onFacilityChange.bind(this);
+        this.addFacility = this.addFacility.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.onChange = this.onDateChange.bind(this);
     }
 
     handleChange(event) {
-        this.setState({value: event.target.value});
+        console.log(event)
+        console.log(event.handler)
+        console.log(event.target)
+        console.log(event.target.id)
+        let stateChange = {};
+        stateChange[event.target.id] = event.target.value;
+        this.setState(stateChange);
     }
 
 
     onDateChange(date) {
-      this.setState({ date: date })
+      this.setState({'date': date})
+    }
+
+    onFacilityChange(event, facility) {
+        console.log(event);
+        console.log(facility);
+    }
+
+    addFacility(name) {
+        if (this.state.facilities[name]) {
+            console.log('Can not add facility, ' + name + ' already ' +
+                'exists');
+            return
+        } else {
+            let facilities = this.state.facilities;
+            facilities[name] = {'name': name};
+            this.setState({'facilities': facilities});
+        }
     }
 
     handleSubmit(event) {
@@ -71,23 +113,27 @@ class AddReport extends Component {
                         type="text"
                         label="First name"
                         labelFor="firstName"
+                        onChange={this.handleChange}
                     />
                     <FieldGroup
                         id="lastName"
                         type="text"
                         label="Last name"
                         labelFor="lastName"
+                        onChange={this.handleChange}
                     />
                     <FieldGroup
                         id="licenseeName"
                         type="text"
                         label="Licensee name"
                         labelFor="licenseeName"
+                        onChange={this.handleChange}
                     />
                     <FormGroup row>
                         <Label for="auditPeriod" sm={3}>Audit period</Label>
                         <Col sm={9}>
                             <DatePicker
+                                id="date"
                                 todayButton={"Today"}
                                 dateFormat="DD/MM/YYYY"
                                 onChange={this.onDateChange}
@@ -100,6 +146,7 @@ class AddReport extends Component {
                         type="email"
                         label="Senior engineer"
                         labelFor="seniorEngineer"
+                        onChange={this.handleChange}
                         placeholder="Email"
                     />
                     <FieldGroup
@@ -107,6 +154,7 @@ class AddReport extends Component {
                         type="email"
                         label="Manager"
                         labelFor="manager"
+                        onChange={this.handleChange}
                         placeholder="Email"
                     />
                     <FieldGroup
@@ -114,6 +162,7 @@ class AddReport extends Component {
                         type="email"
                         label="General manager"
                         labelFor="generalManager"
+                        onChange={this.handleChange}
                         placeholder="Email"
                     />
                     <FieldGroup
@@ -121,20 +170,30 @@ class AddReport extends Component {
                         type="email"
                         label="CEO"
                         labelFor="ceo"
+                        onChange={this.handleChange}
                         placeholder="Email"
                     />
                     <hr sm={12}/>
-                    <FormGroup row>
-                        <Col sm={{size: 4, offset: 4}} align="center">
-                            <Label for="addAuditedFacility">Add audited facility</Label>
-                            <Input
-                                id="addFacility"
-                                type="text"
-                                placeholder="Name of the facility"
-                            />
-                            <Button color="success" className="btn-space btn-wide">Add</Button>
-                        </Col>
-                    </FormGroup>
+
+                    <FaculityList
+                        facilities={this.state.facilities}
+                        onCHange={this.onFacilityChange}
+                    />
+
+                    <AddFacility
+                        facilities={this.state.facilities}
+                        onAddNew={this.addFacility}
+                    />
+
+                    <hr sm={12}/>
+
+                    <FieldGroup
+                        id="recommendations"
+                        type="textarea"
+                        label="Recommendations"
+                        labelFor="recommendations"
+                        onChange={this.handleChange}
+                    />
                 </Form>
                 <Form onSubmit={this.handleSubmit}>
                     <label>
