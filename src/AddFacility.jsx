@@ -34,7 +34,7 @@ class AddFacility extends React.Component {
                             className="btn-space btn-wide"
                             onClick={() => (this.props.onAddNew(this.state.name))}
                         >
-                            Add
+                            Add facility
                         </Button>
                     </Col>
                 </FormGroup>

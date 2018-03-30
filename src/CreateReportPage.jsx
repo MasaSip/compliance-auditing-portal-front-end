@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Col, Container, Form, FormGroup, Label, Input } from 'reactstrap';
 import DatePicker from 'react-date-picker';
 
+import FieldGroup from './FieldGroup'
 import AddFacility from './AddFacility';
 import Facility from './Facility';
 
@@ -15,26 +16,15 @@ class CreateReportPage extends React.Component {
     }
 }
 
-function FieldGroup({ id, type, label, labelFor, onChange, placeholder }) {
-    return (
-        <FormGroup row>
-            <Label for={labelFor}sm={3}>{label}</Label>
-                <Col sm={9}>
-                    <Input
-                        id={id}
-                        type={type}
-                        placeholder={placeholder}
-                        onChange={onChange}
-                    />
-                </Col>
-        </FormGroup>
-  );
-}
-
-function FaculityList({facilities, onChange}) {
+function FacilityList({facilities, onChange}) {
     return (
         Object.values(facilities).map(facility => {
-            return <Facility facility={facility} onChange={onChange} />;
+            return (
+                <div>
+                    <Facility facility={facility} onChange={onChange} />
+                    <hr sm={12}/>
+                </div>
+            );
         })
     );
 }
@@ -82,7 +72,11 @@ class AddReport extends Component {
             return
         } else {
             let facilities = this.state.facilities;
-            facilities[name] = {'name': name};
+            facilities[name] = {
+                'name': name,
+                'description': '',
+                'issues': {}
+            };
             this.setState({'facilities': facilities});
         }
     }
@@ -175,7 +169,7 @@ class AddReport extends Component {
                     />
                     <hr sm={12}/>
 
-                    <FaculityList
+                    <FacilityList
                         facilities={this.state.facilities}
                         onCHange={this.onFacilityChange}
                     />
