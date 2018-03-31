@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Col, Container, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Col, Container, Form, FormGroup, Label } from 'reactstrap';
 import DatePicker from 'react-date-picker';
 
 import FieldGroup from './FieldGroup'
@@ -18,10 +18,14 @@ class CreateReportPage extends React.Component {
 
 function FacilityList({facilities, onChange}) {
     return (
-        Object.values(facilities).map(facility => {
+        Object.entries(facilities).map(([key, facility]) => {
             return (
-                <div>
-                    <Facility facility={facility} onChange={onChange} />
+                <div key={key}>
+                    <Facility
+                        id={key}
+                        facility={facility}
+                        onChange={onChange}
+                    />
                     <hr sm={12}/>
                 </div>
             );
@@ -35,7 +39,10 @@ class AddReport extends Component {
         this.state = {
             value: '',
             date: new Date(),
-            facilities: {'Example facility': {'name': 'Example facility'}}
+            facilities: {'Example facility': {
+                'name': 'Example facility',
+                'issues': []
+            }}
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -56,10 +63,9 @@ class AddReport extends Component {
       this.setState({'date': date})
     }
 
-    updateFacility(facility) {
-        console.log(facility);
+    updateFacility(key, facility) {
         let facilities = this.state.facilities;
-        facilities[facility.name] = facility;
+        facilities[key] = facility;
         this.setState({'facilities': facilities});
     }
 
@@ -73,7 +79,7 @@ class AddReport extends Component {
             facilities[name] = {
                 'name': name,
                 'description': '',
-                'issues': {}
+                'issues': []
             };
             this.setState({'facilities': facilities});
         }
