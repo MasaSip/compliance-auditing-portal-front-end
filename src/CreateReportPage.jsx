@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Col, Container, Form, FormGroup, Label } from 'reactstrap';
+import { Col, Container, Form, FormGroup, Label, Button } from 'reactstrap';
 import DatePicker from 'react-date-picker';
 
 import FieldGroup from './FieldGroup'
@@ -192,7 +192,18 @@ class AddReport extends Component {
                         labelFor="recommendations"
                         onChange={this.handleChange}
                     />
+                    <FormGroup row>
+                        <Col sm={{size: 4, offset: 4}} align="center">
+                            <Button
+                                color="primary"
+                                className="btn-space btn-wide"
+                            >
+                            Save report
+                            </Button>
+                        </Col>
+                    </FormGroup>
                 </Form>
+                {/**
                 <Form onSubmit={this.handleSubmit}>
                     <label>
                         Add new report:
@@ -201,6 +212,8 @@ class AddReport extends Component {
                     <input type="submit" value="Submit" />
                     Reload after adding a new report
                 </Form>
+                */
+                }
             </Container>
         );
     }
