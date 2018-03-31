@@ -35,21 +35,17 @@ class AddReport extends Component {
         this.state = {
             value: '',
             date: new Date(),
-            facilities: {'example': {'name': 'Example facility'}}
+            facilities: {'Example facility': {'name': 'Example facility'}}
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.onDateChange = this.onDateChange.bind(this);
-        this.onFacilityChange = this.onFacilityChange.bind(this);
+        this.updateFacility = this.updateFacility.bind(this);
         this.addFacility = this.addFacility.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(event) {
-        console.log(event)
-        console.log(event.handler)
-        console.log(event.target)
-        console.log(event.target.id)
         let stateChange = {};
         stateChange[event.target.id] = event.target.value;
         this.setState(stateChange);
@@ -60,9 +56,11 @@ class AddReport extends Component {
       this.setState({'date': date})
     }
 
-    onFacilityChange(event, facility) {
-        console.log(event);
+    updateFacility(facility) {
         console.log(facility);
+        let facilities = this.state.facilities;
+        facilities[facility.name] = facility;
+        this.setState({'facilities': facilities});
     }
 
     addFacility(name) {
@@ -171,7 +169,7 @@ class AddReport extends Component {
 
                     <FacilityList
                         facilities={this.state.facilities}
-                        onCHange={this.onFacilityChange}
+                        onChange={this.updateFacility}
                     />
 
                     <AddFacility
