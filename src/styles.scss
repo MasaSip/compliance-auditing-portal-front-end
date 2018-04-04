@@ -3,9 +3,27 @@
 // $body-bg: #000;
 // $body-color: #111;
 
-.App {
-  text-align: center;
-}
-
 // Bootstrap and its default variables
 @import "node_modules/bootstrap/scss/bootstrap";
+
+// Custom scss
+.container {
+  max-width: 960px;
+
+  form.modifyReport {
+    width: 100%;
+  }
+}
+
+.btn.btn-space {
+  margin-top: 0.75em;
+}
+.btn.btn-wide {
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
+
+form .section-header {
+    margin-bottom: $form-group-margin-bottom;
+}
