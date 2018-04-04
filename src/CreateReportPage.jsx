@@ -39,10 +39,7 @@ class AddReport extends Component {
         this.state = {
             value: '',
             date: new Date(),
-            facilities: {'Example facility': {
-                'name': 'Example facility',
-                'issues': []
-            }}
+            facilities: {}
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -70,9 +67,11 @@ class AddReport extends Component {
     }
 
     addFacility(name) {
-        if (this.state.facilities[name]) {
-            console.log('Can not add facility, ' + name + ' already ' +
-                'exists');
+        // Facility need to have a name
+        if (!name.toString().trim().length) {
+            return
+        // Facility can not exist already
+        } else if (this.state.facilities[name]) {
             return
         } else {
             let facilities = this.state.facilities;

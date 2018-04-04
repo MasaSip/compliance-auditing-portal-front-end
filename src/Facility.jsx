@@ -59,7 +59,6 @@ class Facility extends React.Component {
                 issue.name = target.value;
             }
             if (target.type === 'date') {
-                console.log("date")
                 issue.complianceDate = target.value;
             }
             facility.issues[target.id] = issue;
