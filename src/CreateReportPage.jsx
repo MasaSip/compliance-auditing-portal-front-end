@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import { Col, Container, Form, FormGroup, Label, Button } from 'reactstrap';
-import DatePicker from 'react-date-picker';
+import { Col, Container, Form, FormGroup, Button } from 'reactstrap';
 
 import FieldGroup from './FieldGroup'
 import AddFacility from './AddFacility';
@@ -36,14 +35,14 @@ function FacilityList({facilities, onChange}) {
 class AddReport extends Component {
     constructor(props) {
         super(props);
+        let today = new Date()
         this.state = {
             value: '',
-            date: new Date(),
+            auditPeriod: today.toISOString().split(/T/)[0],
             facilities: {}
         };
 
         this.handleChange = this.handleChange.bind(this);
-        this.onDateChange = this.onDateChange.bind(this);
         this.updateFacility = this.updateFacility.bind(this);
         this.addFacility = this.addFacility.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -52,12 +51,8 @@ class AddReport extends Component {
     handleChange(event) {
         let stateChange = {};
         stateChange[event.target.id] = event.target.value;
+        console.log(stateChange);
         this.setState(stateChange);
-    }
-
-
-    onDateChange(date) {
-      this.setState({'date': date})
     }
 
     updateFacility(key, facility) {
@@ -126,18 +121,14 @@ class AddReport extends Component {
                         labelFor="licenseeName"
                         onChange={this.handleChange}
                     />
-                    <FormGroup row>
-                        <Label for="auditPeriod" sm={3}>Audit period</Label>
-                        <Col sm={9}>
-                            <DatePicker
-                                id="date"
-                                todayButton={"Today"}
-                                dateFormat="DD/MM/YYYY"
-                                onChange={this.onDateChange}
-                                value={this.state.date}
-                            />
-                        </Col>
-                    </FormGroup>
+                    <FieldGroup
+                        id="auditPeriod"
+                        type="date"
+                        label="Audit period"
+                        labelFor="auditPeriod"
+                        onChange={this.handleChange}
+                        value={this.state.auditPeriod}
+                    />
                     <FieldGroup
                         id="seniorEngineer"
                         type="email"
