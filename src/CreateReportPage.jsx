@@ -51,7 +51,6 @@ class AddReport extends Component {
     handleChange(event) {
         let stateChange = {};
         stateChange[event.target.id] = event.target.value;
-        console.log(stateChange);
         this.setState(stateChange);
     }
 
@@ -84,7 +83,13 @@ class AddReport extends Component {
         event.preventDefault();
 
         var url = this.props.apiUrl + "/api/reports";
-        var data = { name: this.state.value};
+        let value = '';
+        let names = Object.values(this.state.facilities).map(f => f.name);
+        for (let i in names) {
+            value += names[i];
+        }
+        value += ' ' + (new Date()).toISOString();
+        var data = { name: value};
 
         fetch(url, {
             method: 'POST',
@@ -188,23 +193,13 @@ class AddReport extends Component {
                             <Button
                                 color="primary"
                                 className="btn-space btn-wide"
+                                onClick={this.handleSubmit}
                             >
                             Save report
                             </Button>
                         </Col>
                     </FormGroup>
                 </Form>
-                {/**
-                <Form onSubmit={this.handleSubmit}>
-                    <label>
-                        Add new report:
-                        <input type="text" value={this.state.value} onChange={this.handleChange} />
-                    </label>
-                    <input type="submit" value="Submit" />
-                    Reload after adding a new report
-                </Form>
-                */
-                }
             </Container>
         );
     }
