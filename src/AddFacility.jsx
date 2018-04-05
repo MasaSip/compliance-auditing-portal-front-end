@@ -28,11 +28,15 @@ class AddFacility extends React.Component {
                             type="text"
                             onChange={this.handleChange}
                             placeholder="Name of the facility"
+                            value={this.state.name}
                         />
                         <Button
                             color="success"
                             className="btn-space btn-wide"
-                            onClick={() => (this.props.onAddNew(this.state.name))}
+                            onClick={() => (
+                                this.props.onAddNew(this.state.name) ?
+                                    this.setState({'name': ''}) : ''
+                            )}
                         >
                             Add facility
                         </Button>

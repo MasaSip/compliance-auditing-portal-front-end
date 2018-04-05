@@ -64,10 +64,10 @@ class AddReport extends Component {
     addFacility(name) {
         // Facility need to have a name
         if (!name.toString().trim().length) {
-            return
+            return false;
         // Facility can not exist already
         } else if (this.state.facilities[name]) {
-            return
+            return false;
         } else {
             let facilities = this.state.facilities;
             facilities[name] = {
@@ -76,6 +76,7 @@ class AddReport extends Component {
                 'issues': []
             };
             this.setState({'facilities': facilities});
+            return true;
         }
     }
 
