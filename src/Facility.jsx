@@ -100,6 +100,12 @@ class Facility extends React.Component {
                                 Non-compliance issues
                             </h3>
                         </Col>
+                    </Row>
+                    <IssueList
+                        issues={this.props.facility.issues}
+                        onChange={e => this.handleChange('issue', e)}
+                    />
+                    <Row className="align-items-center">
                         <Col sm={6} align="right">
                             <Button
                                 color="success"
@@ -110,10 +116,6 @@ class Facility extends React.Component {
                             </Button>
                         </Col>
                     </Row>
-                    <IssueList
-                        issues={this.props.facility.issues}
-                        onChange={e => this.handleChange('issue', e)}
-                    />
                 </Col>
             </Row>
         )

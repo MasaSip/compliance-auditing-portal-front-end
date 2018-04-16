@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import { Col, Container, Form, FormGroup, Label, Button } from 'reactstrap';
-import DatePicker from 'react-date-picker';
+import { Col, Container, Form, FormGroup, Button } from 'reactstrap';
 
 import FieldGroup from './FieldGroup'
 import AddFacility from './AddFacility';
@@ -36,14 +35,14 @@ function FacilityList({facilities, onChange}) {
 class AddReport extends Component {
     constructor(props) {
         super(props);
+        let today = new Date()
         this.state = {
             value: '',
-            date: new Date(),
+            auditPeriod: today.toISOString().split(/T/)[0],
             facilities: {}
         };
 
         this.handleChange = this.handleChange.bind(this);
-        this.onDateChange = this.onDateChange.bind(this);
         this.updateFacility = this.updateFacility.bind(this);
         this.addFacility = this.addFacility.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -55,11 +54,6 @@ class AddReport extends Component {
         this.setState(stateChange);
     }
 
-
-    onDateChange(date) {
-      this.setState({'date': date})
-    }
-
     updateFacility(key, facility) {
         let facilities = this.state.facilities;
         facilities[key] = facility;
@@ -69,10 +63,10 @@ class AddReport extends Component {
     addFacility(name) {
         // Facility need to have a name
         if (!name.toString().trim().length) {
-            return
+            return false;
         // Facility can not exist already
         } else if (this.state.facilities[name]) {
-            return
+            return false;
         } else {
             let facilities = this.state.facilities;
             facilities[name] = {
@@ -81,6 +75,7 @@ class AddReport extends Component {
                 'issues': []
             };
             this.setState({'facilities': facilities});
+            return true;
         }
     }
 
@@ -88,7 +83,13 @@ class AddReport extends Component {
         event.preventDefault();
 
         var url = this.props.apiUrl + "/api/reports";
-        var data = { name: this.state.value};
+        let value = '';
+        let names = Object.values(this.state.facilities).map(f => f.name);
+        for (let i in names) {
+            value += names[i];
+        }
+        value += ' ' + (new Date()).toISOString();
+        var data = { name: value};
 
         fetch(url, {
             method: 'POST',
@@ -126,18 +127,14 @@ class AddReport extends Component {
                         labelFor="licenseeName"
                         onChange={this.handleChange}
                     />
-                    <FormGroup row>
-                        <Label for="auditPeriod" sm={3}>Audit period</Label>
-                        <Col sm={9}>
-                            <DatePicker
-                                id="date"
-                                todayButton={"Today"}
-                                dateFormat="DD/MM/YYYY"
-                                onChange={this.onDateChange}
-                                value={this.state.date}
-                            />
-                        </Col>
-                    </FormGroup>
+                    <FieldGroup
+                        id="auditPeriod"
+                        type="date"
+                        label="Audit period"
+                        labelFor="auditPeriod"
+                        onChange={this.handleChange}
+                        value={this.state.auditPeriod}
+                    />
                     <FieldGroup
                         id="seniorEngineer"
                         type="email"
@@ -196,23 +193,13 @@ class AddReport extends Component {
                             <Button
                                 color="primary"
                                 className="btn-space btn-wide"
+                                onClick={this.handleSubmit}
                             >
                             Save report
                             </Button>
                         </Col>
                     </FormGroup>
                 </Form>
-                {/**
-                <Form onSubmit={this.handleSubmit}>
-                    <label>
-                        Add new report:
-                        <input type="text" value={this.state.value} onChange={this.handleChange} />
-                    </label>
-                    <input type="submit" value="Submit" />
-                    Reload after adding a new report
-                </Form>
-                */
-                }
             </Container>
         );
     }
