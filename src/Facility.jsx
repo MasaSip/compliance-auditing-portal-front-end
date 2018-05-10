@@ -6,25 +6,25 @@ import FieldGroup from './FieldGroup';
 
 function IssueList({ issues, onChange }) {
   return (
-    issues ? (Object.entries(issues).map(([key, issue]) => (
-      <div key={key}>
-        <h4 className="section-header">#{Number(key) + 1}</h4>
+    issues ? (Object.entries(issues).map(issue => (
+      <div key={issue.key}>
+        <h4 className="section-header">#{Number(issue.key) + 1}</h4>
         <FieldGroup
-          id={key}
+          id={issue.key}
           type="text"
           label="Name"
           labelFor="name"
           onChange={onChange}
         />
         <FieldGroup
-          id={key}
+          id={issue.key}
           type="file"
           label="Upload a picture"
           labelFor="picture"
           onChange={onChange}
         />
         <FieldGroup
-          id={key}
+          id={issue.key}
           type="date"
           label="Conpliance date"
           labelFor="complianceDate"
@@ -36,46 +36,39 @@ function IssueList({ issues, onChange }) {
 }
 
 class Facility extends React.Component {
-  constructor(props) {
+  constructor(id, facility, onChange, ...props) {
     super(props);
-
+    this.facility = facility;
     this.handleChange = this.handleChange.bind(this);
     this.addIssue = this.addIssue.bind(this);
   }
 
   handleChange(field, event) {
-    const facility = this.props.facility;
-    const target = event.target;
-
-    if (target.id === 'description') {
-      facility.description = target.value;
+    if (event.target.id === 'description') {
+      this.facility.description = event.target.value;
     }
 
     if (field === 'issue') {
-      const issue = facility.issues[target.id];
-      if (target.type === 'text') {
-        issue.name = target.value;
+      const issue = this.facility.issues[event.target.id];
+      if (event.target.type === 'text') {
+        issue.name = event.target.value;
       }
-      if (target.type === 'date') {
-        issue.complianceDate = target.value;
+      if (event.target.type === 'date') {
+        issue.complianceDate = event.target.value;
       }
-      facility.issues[target.id] = issue;
+      this.facility.issues[event.target.id] = issue;
     }
 
-    this.props.onChange(this.props.id, facility);
+    this.props.onChange(this.props.id, this.facility);
   }
 
   addIssue() {
-    const facility = this.props.facility;
-    let issues = facility.issues;
-
-    if (issues) {
-      issues.push({ name: 'moi' });
+    if (this.facility.issues) {
+      this.facility.issues.push({ name: 'moi' });
     } else {
-      issues = [{ name: 'moi' }];
+      this.facility.issues = [{ name: 'moi' }];
     }
-    facility.issues = issues;
-    this.props.onChange(this.props.id, facility);
+    this.props.onChange(this.props.id, this.facility);
   }
 
   render() {

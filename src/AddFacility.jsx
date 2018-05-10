@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button, Col, FormGroup, Label, Input } from 'reactstrap';
 
 class AddFacility extends React.Component {
@@ -46,5 +47,9 @@ class AddFacility extends React.Component {
     );
   }
 }
+
+AddFacility.propTypes = {
+  onAddNew: PropTypes.func.isRequired,
+};
 
 export default AddFacility;

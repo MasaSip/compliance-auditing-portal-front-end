@@ -1,36 +1,32 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
+import DeleteReport from './DeleteReport';
 
-class ReportPage extends React.Component {
-  render() {
-    return (
-      <div>
-        <Link to="/create-report">
-          <Button color="primary">Create report</Button>
-        </Link>
-        <ReportList apiUrl={this.props.apiUrl} />
-      </div>
-    );
-  }
+function ReportPage({ apiUrl }) {
+  return (
+    <div>
+      <Link to="/create-report">
+        <Button color="primary">Create report</Button>
+      </Link>
+      <ReportList apiUrl={apiUrl} />
+    </div>
+  );
 }
 
-// //////////////////////////////////////////////////////////////////////////
-
-class ReportListItem extends React.Component {
-  render() {
-    return (
-      <div>
-        {this.props.value.name} {this.props.value.startTime} <DeleteReport apiUrl={this.props.apiUrl} value={this.props.value} />
-      </div>
-    );
-  }
+function ReportListItem(props) {
+  return (
+    <div>
+      {props.value.name}
+      {props.value.startTime}
+      <DeleteReport apiUrl={props.apiUrl} value={props.value} />
+    </div>
+  );
 }
 
-// //////////////////////////////////////////////////////////////////////////
-
-class ReportList extends React.Component {
+class ReportList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -91,37 +87,8 @@ class ReportList extends React.Component {
   }
 }
 
-// //////////////////////////////////////////////////////////////////////////
-
-class DeleteReport extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-
-    const url = this.props.value._links.self.href;
-
-    fetch(url, {
-      method: 'DELETE',
-      headers: new Headers({
-        'Content-Type': 'application/json',
-      }),
-    }).then(res => res.json())
-      .catch(error => console.error('Error:', error))
-      .then(response => console.log('Success:', response));
-  }
-
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <input type="submit" value="Delete Report" />
-      </form>
-    );
-  }
-}
+ReportList.propTypes = {
+  apiUrl: PropTypes.string.isRequired,
+};
 
 export default ReportPage;
