@@ -7,14 +7,13 @@ import CreateReportPage from './CreateReportPage';
 
 class App extends Component {
   render() {
-    let apiUrl = 'https://ecb.guelland.eu';
+    const apiUrl = 'https://ecb.guelland.eu';
     // uncomment the following line if you want to test a local backend.
-    // apiUrl='http://localhost:8080';
-sdf
+    // const apiUrl = 'http://localhost:8080';
     const Header = () => (
       <Navbar expand="md" className="bg-light">
         <NavbarBrand>
-          <Link to='/'>
+          <Link to="/">
             Home
           </Link>
         </NavbarBrand>
@@ -23,8 +22,8 @@ sdf
 
     const Main = () => (
       <Switch>
-        <Route exact path='/' render={() => (<ReportPage apiUrl={this.apiUrl} />)} />
-        <Route path='/create-report' render={() => (<CreateReportPage apiUrl={this.apiUrl} />)} />
+        <Route exact path="/" render={() => (<ReportPage apiUrl={this.apiUrl} />)} />
+        <Route path="/create-report" render={() => (<CreateReportPage apiUrl={this.apiUrl} />)} />
       </Switch>
     );
 
