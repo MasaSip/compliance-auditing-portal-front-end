@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { Link, Route, Switch } from 'react-router-dom'
+import { Link, Route, Switch } from 'react-router-dom';
 import { Navbar, NavbarBrand } from 'reactstrap';
 
 import ReportPage from './ReportPage';
 import CreateReportPage from './CreateReportPage';
 
 class App extends Component {
-    apiUrl='https://ecb.guelland.eu';
+  render() {
+    let apiUrl = 'https://ecb.guelland.eu';
     // uncomment the following line if you want to test a local backend.
     // apiUrl='http://localhost:8080';
-  render() {
+sdf
     const Header = () => (
       <Navbar expand="md" className="bg-light">
         <NavbarBrand>
