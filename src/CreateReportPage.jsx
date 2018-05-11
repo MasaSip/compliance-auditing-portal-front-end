@@ -5,14 +5,12 @@ import FieldGroup from './FieldGroup';
 import AddFacility from './AddFacility';
 import Facility from './Facility';
 
-class CreateReportPage extends React.Component {
-  render() {
-    return (
-      <div>
-        <AddReport apiUrl={this.props.apiUrl} />
-      </div>
-    );
-  }
+function CreateReportPage(props) {
+  return (
+    <div>
+      <AddReport {...props} />
+    </div>
+  );
 }
 
 function FacilityList({ facilities, onChange }) {
@@ -35,7 +33,6 @@ class AddReport extends Component {
     super(props);
     const today = new Date();
     this.state = {
-      value: '',
       auditPeriod: today.toISOString().split(/T/)[0],
       facilities: {},
     };
@@ -53,7 +50,7 @@ class AddReport extends Component {
   }
 
   updateFacility(key, facility) {
-    const facilities = this.state.facilities;
+    const { facilities } = this.state;
     facilities[key] = facility;
     this.setState({ facilities });
   }
@@ -66,12 +63,13 @@ class AddReport extends Component {
     } else if (this.state.facilities[name]) {
       return false;
     }
-    const facilities = this.state.facilities;
-    facilities[name] = {
+    const { facilities } = this.state;
+    const newFacility = {
       name,
       description: '',
       issues: [],
     };
+    facilities[name] = newFacility;
     this.setState({ facilities });
     return true;
   }
@@ -82,9 +80,9 @@ class AddReport extends Component {
     const url = `${this.props.apiUrl}/api/reports`;
     let value = '';
     const names = Object.values(this.state.facilities).map(f => f.name);
-    for (const i in names) {
-      value += names[i];
-    }
+    names.forEach((key) => {
+      value += names[key];
+    });
     value += ` ${(new Date()).toISOString()}`;
     const data = { name: value };
 
@@ -192,7 +190,7 @@ class AddReport extends Component {
                 className="btn-space btn-wide"
                 onClick={this.handleSubmit}
               >
-                            Save report
+                Save report
               </Button>
             </Col>
           </FormGroup>
