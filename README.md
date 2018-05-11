@@ -22,3 +22,7 @@ access site on http://localhost:3000
 #Development
 
 When editing `.scss` files, either run `npm run watch-css` at a separate window or rerun `npm start after finished editing.
+
+run tests
+
+    npm test
