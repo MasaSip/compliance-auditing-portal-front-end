@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom'
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
 
 class ReportPage extends React.Component {
@@ -41,27 +42,31 @@ class ReportList extends React.Component {
     }
 
     componentDidMount() {
+
         var url = this.props.apiUrl + "/api/reports";
-        fetch(url)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        isLoaded: true,
-                        items: result._embedded.reports,
-                        page: result.page
-                    });
-                },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
-            )
+        axios.get(url, {
+            auth: {
+                username: 'User',
+                password: 'password'
+            }
+        }).then(res => res.data).then(
+            res => {
+                this.setState({
+                    isLoaded: true,
+                    items: res._embedded.reports,
+                    page: res.page
+                });
+            },
+            // Note: it's important to handle errors here
+            // instead of a catch() block so that we don't swallow
+            // exceptions from actual bugs in components.
+            err => {
+                this.setState({
+                    isLoaded: true,
+                    error: err
+                });
+            }
+        );
     }
 
     render() {
