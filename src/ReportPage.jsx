@@ -2,17 +2,24 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Button } from 'reactstrap';
+import { Container, Row, Col, Button, Table } from 'reactstrap';
 import DeleteReport from './DeleteReport';
 
 function ReportPage({ apiUrl }) {
   return (
-    <div>
-      <Link to="/create-report">
-        <Button color="primary">Create report</Button>
-      </Link>
+    <Container className="main">
+      <Row>
+        <Col md="10" align="left">
+          <h1>Compilance Audinting Reports</h1>
+        </Col>
+        <Col md="2" align="right" id="create-report">
+          <Link to="/create-report">
+            <Button color="primary">Create report</Button>
+          </Link>
+        </Col>
+      </Row>
       <ReportList apiUrl={apiUrl} />
-    </div>
+    </Container>
   );
 }
 
@@ -74,14 +81,53 @@ class ReportList extends Component {
       return <div>Loading...</div>;
     }
     return (
-      <div> There are {page.totalElements} reports.
-        <ul>
-          {items.map(item => (
-            <li key={item.name}>
-              <ReportListItem value={item} apiUrl={this.props.apiUrl} />
-            </li>
-                        ))}
-        </ul>
+      <div>
+        <Table striped bordered>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Date created</th>
+              <th>Licensee</th>
+              <th>Person responsible</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Rucana report 2018</th>
+              <td>13.5.2018</td>
+              <td>Nampower</td>
+              <td>Otto Oltermanni</td>
+              <td>Saved as draft</td>
+            </tr>
+            <tr>
+              <th scope="row">Rucana report 2018</th>
+              <td>13.5.2018</td>
+              <td>Nampower</td>
+              <td>Otto Oltermanni</td>
+              <td>Saved as draft</td>
+            </tr>
+            <tr>
+              <th scope="row">Rucana report 2018</th>
+              <td>13.5.2018</td>
+              <td>Nampower</td>
+              <td>Otto Oltermanni</td>
+              <td>Saved as draft</td>
+            </tr>
+          </tbody>
+        </Table>
+
+        {/**
+        <div> There are {page.totalElements} reports.
+          <ul>
+            {items.map(item => (
+              <li key={item.name}>
+                <ReportListItem value={item} apiUrl={this.props.apiUrl} />
+              </li>
+            ))}
+          </ul>
+        </div>
+        */}
       </div>
     );
   }
