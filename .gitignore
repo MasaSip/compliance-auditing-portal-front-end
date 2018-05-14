@@ -22,3 +22,5 @@ yarn-error.log*
 
 #Webstorm
 .idea
+
+src/**/*.css

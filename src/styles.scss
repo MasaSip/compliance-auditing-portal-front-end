@@ -1,0 +1,54 @@
+// https://getbootstrap.com/docs/4.0/getting-started/theming/
+// Your variable overrides, e.g.
+// $body-bg: #000;
+// $body-color: #111;
+
+// Bootstrap and its default variables
+@import "node_modules/bootstrap/scss/bootstrap";
+
+// Custom scss
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 80px;
+}
+
+.App-header {
+  height: 150px;
+  padding: 20px;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+button#login {
+  width: 100%;
+}
+
+.container {
+  max-width: 960px;
+
+  form.modifyReport {
+    width: 100%;
+  }
+}
+
+.btn.btn-space {
+  margin-top: 0.75em;
+}
+.btn.btn-wide {
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
+form .section-header {
+    margin-bottom: $form-group-margin-bottom;
+}
