@@ -99,7 +99,7 @@ class ReportList extends Component {
                   name={item.name}
                   dateCreated="1.1.2018"
                   licensee="Nampower"
-                  personResponsible={item.user.firstName + item.user.lastName}
+                  personResponsible={`${item.user.firstName} ${item.user.lastName}`}
                   status="Draft"
                 />
               ))
