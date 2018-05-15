@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button, Table } from 'reactstrap';
-import DeleteReport from './DeleteReport';
+import ReportService from './ReportService';
 
 function ReportPage({ apiUrl }) {
   return (
@@ -23,13 +22,17 @@ function ReportPage({ apiUrl }) {
   );
 }
 
-function ReportListItem(props) {
+function ReportListItem({
+  id, name, dateCreated: date, licensee, personResponsible, status,
+}) {
   return (
-    <div>
-      {props.value.name}
-      {props.value.startTime}
-      <DeleteReport apiUrl={props.apiUrl} value={props.value} />
-    </div>
+    <tr key={id}>
+      <th scope="row">{ name }</th>
+      <td>{date}</td>
+      <td>{licensee}</td>
+      <td>{personResponsible}</td>
+      <td>{status}</td>
+    </tr>
   );
 }
 
@@ -40,23 +43,19 @@ class ReportList extends Component {
       error: null,
       isLoaded: false,
       items: [],
-      page: null,
+      // page: null,
     };
+
+    this.reportServece = new ReportService(props.apiUrl);
   }
 
   componentDidMount() {
-    const url = `${this.props.apiUrl}/api/reports`;
-    axios.get(url, {
-      auth: {
-        username: 'User',
-        password: 'password',
-      },
-    }).then(res => res.data).then(
+    this.reportServece.getReportList().then(res => res.data).then(
       (res) => {
         this.setState({
           isLoaded: true,
           items: res._embedded.reports,
-          page: res.page,
+          // page: res.page,
         });
       },
       // Note: it's important to handle errors here
@@ -73,7 +72,7 @@ class ReportList extends Component {
 
   render() {
     const {
-      error, isLoaded, items, page,
+      error, isLoaded, items,
     } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
@@ -93,41 +92,20 @@ class ReportList extends Component {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">Rucana report 2018</th>
-              <td>13.5.2018</td>
-              <td>Nampower</td>
-              <td>Otto Oltermanni</td>
-              <td>Saved as draft</td>
-            </tr>
-            <tr>
-              <th scope="row">Rucana report 2018</th>
-              <td>13.5.2018</td>
-              <td>Nampower</td>
-              <td>Otto Oltermanni</td>
-              <td>Saved as draft</td>
-            </tr>
-            <tr>
-              <th scope="row">Rucana report 2018</th>
-              <td>13.5.2018</td>
-              <td>Nampower</td>
-              <td>Otto Oltermanni</td>
-              <td>Saved as draft</td>
-            </tr>
+            {
+              items.map(item => (
+                <ReportListItem
+                  key={item.id}
+                  name={item.name}
+                  dateCreated="1.1.2018"
+                  licensee="Nampower"
+                  personResponsible={item.user.firstName + item.user.lastName}
+                  status="Draft"
+                />
+              ))
+            }
           </tbody>
         </Table>
-
-        {/**
-        <div> There are {page.totalElements} reports.
-          <ul>
-            {items.map(item => (
-              <li key={item.name}>
-                <ReportListItem value={item} apiUrl={this.props.apiUrl} />
-              </li>
-            ))}
-          </ul>
-        </div>
-        */}
       </div>
     );
   }
