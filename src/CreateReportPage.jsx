@@ -4,6 +4,7 @@ import { Col, Container, Form, FormGroup, Button } from 'reactstrap';
 import FieldGroup from './FieldGroup';
 import AddFacility from './AddFacility';
 import Facility from './Facility';
+import ReportService from './ReportService';
 
 function CreateReportPage(props) {
   return (
@@ -41,6 +42,7 @@ class AddReport extends Component {
     this.updateFacility = this.updateFacility.bind(this);
     this.addFacility = this.addFacility.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.reportServece = new ReportService(props.apiUrl);
   }
 
   handleChange(event) {
@@ -77,22 +79,15 @@ class AddReport extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    const url = `${this.props.apiUrl}/api/reports`;
     let value = '';
     const names = Object.values(this.state.facilities).map(f => f.name);
-    names.forEach((key) => {
-      value += names[key];
+    names.forEach((item) => {
+      value += item;
     });
     value += ` ${(new Date()).toISOString()}`;
     const data = { name: value };
 
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: new Headers({
-        'Content-Type': 'application/json',
-      }),
-    }).then(res => res.json())
+    this.reportServece.addReport(data)
       .catch(error => console.error('Error:', error))
       .then(response => console.log('Success:', response));
   }
