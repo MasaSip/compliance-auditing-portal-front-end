@@ -1,7 +1,21 @@
 import axios from 'axios';
+import _ from 'lodash';
 
 const username = 'User';
 const password = 'password';
+
+const fieldToApi = {
+  reportTitle: 'name',
+  // firstName:
+  // lastName:
+  // licenseeName:
+  startOfAuditPeriod: 'startTime',
+  endOfAuditPeriod: 'endTime',
+  seniorEngineer: 'senior_engineer_email',
+  manager: 'manager_email',
+  generalManager: 'general_manager_email',
+  ceo: 'ceo_email',
+};
 
 class ReportService {
   constructor(apiUrl) {
@@ -42,8 +56,16 @@ class ReportService {
     return this.api.get(this.reportListPath, this.config);
   }
 
-  addReport(data) {
-    // get user details for userUri. This should be cached
+  addReport(report) {
+    const data = {};
+    _.forEach(report, (value, key) => {
+      if (['startOfAuditPeriod', 'endOfAuditPeriod'].includes(key)) {
+        data[fieldToApi[key]] = `${value}T12:00:00.000`;
+      } else {
+        data[fieldToApi[key]] = value;
+      }
+    });
+
     return this.validateUser(username)
       .then((userUri) => {
         data.user = userUri;

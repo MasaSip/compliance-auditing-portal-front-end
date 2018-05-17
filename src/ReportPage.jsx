@@ -9,7 +9,7 @@ function ReportPage({ apiUrl }) {
     <Container className="main">
       <Row>
         <Col md="10" align="left">
-          <h1>Compilance Audinting Reports</h1>
+          <h1>Compliance Auditing Reports</h1>
         </Col>
         <Col md="2" align="right" id="create-report">
           <Link to="/create-report">
