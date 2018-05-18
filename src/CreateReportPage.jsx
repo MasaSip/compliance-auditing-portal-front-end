@@ -4,7 +4,6 @@ import { Col, Container, Form, FormGroup, Button } from 'reactstrap';
 import FieldGroup from './FieldGroup';
 import AddFacility from './AddFacility';
 import Facility from './Facility';
-import ReportService from './ReportService';
 
 function CreateReportPage(props) {
   return (
@@ -43,7 +42,7 @@ class AddReport extends Component {
     this.updateFacility = this.updateFacility.bind(this);
     this.addFacility = this.addFacility.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.reportServece = new ReportService(props.apiUrl);
+    this.reportService = props.reportService;
   }
 
   handleChange(event) {
@@ -79,7 +78,7 @@ class AddReport extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.reportServece.addReport(this.state)
+    this.reportService.addReport(this.state)
       .catch(error => console.error('Error:', error))
       .then(response => console.log('Success:', response));
   }

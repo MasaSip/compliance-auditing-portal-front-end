@@ -8,7 +8,7 @@ const fieldToApi = {
   reportTitle: 'name',
   // firstName:
   // lastName:
-  // licenseeName:
+  licenseeName: 'licensee',
   startOfAuditPeriod: 'startTime',
   endOfAuditPeriod: 'endTime',
   seniorEngineer: 'senior_engineer_email',
@@ -26,6 +26,7 @@ class ReportService {
     this.reportListPath = '/api/reports?projection=embedded';
     this.reportPath = '/api/reports';
     this.findByUsername = '/api/users/search/findByUsername';
+    this.reportByIdPath = id => (`/api/reports/${id}?projection=embedded`);
     this.config = {
       auth: {
         username,
@@ -53,7 +54,7 @@ class ReportService {
   }
 
   getReportList() {
-    return this.api.get(this.reportListPath, this.config);
+    return this.api.get(this.reportListPath, this.config).then(res => res.data);
   }
 
   addReport(report) {
@@ -65,12 +66,17 @@ class ReportService {
         data[fieldToApi[key]] = value;
       }
     });
-
+    console.log(data);
     return this.validateUser(username)
       .then((userUri) => {
         data.user = userUri;
         return this.api.post(this.reportPath, data, this.config);
       });
+  }
+
+  findReportById(id) {
+    return this.api.get(this.reportByIdPath(id), this.config)
+      .then(res => res.data);
   }
 }
 
