@@ -39,3 +39,25 @@
 form .section-header {
     margin-bottom: $form-group-margin-bottom;
 }
+
+.report-preview {
+  .container {
+    padding: 0px 30px 0px 30px;
+  }
+
+  h1 {
+    margin-top: 32px;
+    margin-bottom: 64px;
+    text-align: center;
+  }
+  .front-page-info {
+    margin-bottom: 64px;
+    padding: 0px 30px 0px 30px;
+  }
+  .cover-sub-title {
+    font-weight: bold;
+  }
+  .new-page {
+    page-break-before: always;
+  }
+}

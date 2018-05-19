@@ -33,7 +33,8 @@ class AddReport extends Component {
     super(props);
     const today = new Date();
     this.state = {
-      auditPeriod: today.toISOString().split(/T/)[0],
+      startOfAuditPeriod: today.toISOString().split(/T/)[0],
+      endOfAuditPeriod: today.toISOString().split(/T/)[0],
       facilities: {},
     };
 
@@ -41,6 +42,7 @@ class AddReport extends Component {
     this.updateFacility = this.updateFacility.bind(this);
     this.addFacility = this.addFacility.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.reportService = props.reportService;
   }
 
   handleChange(event) {
@@ -76,23 +78,7 @@ class AddReport extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
-    const url = `${this.props.apiUrl}/api/reports`;
-    let value = '';
-    const names = Object.values(this.state.facilities).map(f => f.name);
-    names.forEach((key) => {
-      value += names[key];
-    });
-    value += ` ${(new Date()).toISOString()}`;
-    const data = { name: value };
-
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: new Headers({
-        'Content-Type': 'application/json',
-      }),
-    }).then(res => res.json())
+    this.reportService.addReport(this.state)
       .catch(error => console.error('Error:', error))
       .then(response => console.log('Success:', response));
   }
@@ -101,6 +87,13 @@ class AddReport extends Component {
     return (
       <Container>
         <Form className="modifyReport">
+          <FieldGroup
+            id="reportTitle"
+            type="text"
+            label="Report title"
+            labelFor="reportTitle"
+            onChange={this.handleChange}
+          />
           <FieldGroup
             id="firstName"
             type="text"
@@ -123,12 +116,20 @@ class AddReport extends Component {
             onChange={this.handleChange}
           />
           <FieldGroup
-            id="auditPeriod"
+            id="startOfAuditPeriod"
             type="date"
-            label="Audit period"
-            labelFor="auditPeriod"
+            label="Start of audit period"
+            labelFor="startOfAuditPeriod"
             onChange={this.handleChange}
-            value={this.state.auditPeriod}
+            value={this.state.startOfAuditPeriod}
+          />
+          <FieldGroup
+            id="endOfAuditPeriod"
+            type="date"
+            label="End of audit period"
+            labelFor="endOfAuditPeriod"
+            onChange={this.handleChange}
+            value={this.state.endOfAuditPeriod}
           />
           <FieldGroup
             id="seniorEngineer"

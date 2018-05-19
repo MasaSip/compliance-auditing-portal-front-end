@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button, Table } from 'reactstrap';
-import ReportService from './ReportService';
 
-function ReportPage({ apiUrl }) {
+function ReportPage({ reportService }) {
   return (
     <Container className="main">
       <Row>
         <Col md="10" align="left">
-          <h1>Compilance Audinting Reports</h1>
+          <h1>Compliance Auditing Reports</h1>
         </Col>
         <Col md="2" align="right" id="create-report">
-          <Link to="/create-report">
+          <Link to="/edit-report">
             <Button color="primary">Create report</Button>
           </Link>
         </Col>
       </Row>
-      <ReportList apiUrl={apiUrl} />
+      <ReportList reportService={reportService} />
     </Container>
   );
 }
@@ -27,7 +25,7 @@ function ReportListItem({
 }) {
   return (
     <tr key={id}>
-      <th scope="row">{ name }</th>
+      <th scope="row"><Link to={`/preview-report/${id}`}>{name}</Link></th>
       <td>{date}</td>
       <td>{licensee}</td>
       <td>{personResponsible}</td>
@@ -46,11 +44,11 @@ class ReportList extends Component {
       // page: null,
     };
 
-    this.reportServece = new ReportService(props.apiUrl);
+    this.reportService = props.reportService;
   }
 
   componentDidMount() {
-    this.reportServece.getReportList().then(res => res.data).then(
+    this.reportService.getReportList().then(
       (res) => {
         this.setState({
           isLoaded: true,
@@ -96,6 +94,7 @@ class ReportList extends Component {
               items.map(item => (
                 <ReportListItem
                   key={item.id}
+                  id={item.id}
                   name={item.name}
                   dateCreated="1.1.2018"
                   licensee="Nampower"
@@ -110,9 +109,5 @@ class ReportList extends Component {
     );
   }
 }
-
-ReportList.propTypes = {
-  apiUrl: PropTypes.string.isRequired,
-};
 
 export default ReportPage;
