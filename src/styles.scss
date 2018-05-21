@@ -41,6 +41,19 @@ button#login {
   }
 }
 
+.main {
+  padding-top: 2em;
+
+  h1 {
+    margin-bottom: 1rem;
+  }
+
+  div#create-report {
+    margin-top: auto;
+    margin-bottom: 1rem
+  }
+}
+
 .btn.btn-space {
   margin-top: 0.75em;
 }
@@ -51,4 +64,26 @@ button#login {
 
 form .section-header {
     margin-bottom: $form-group-margin-bottom;
+}
+
+.report-preview {
+  .container {
+    padding: 0px 30px 0px 30px;
+  }
+
+  h1 {
+    margin-top: 32px;
+    margin-bottom: 64px;
+    text-align: center;
+  }
+  .front-page-info {
+    margin-bottom: 64px;
+    padding: 0px 30px 0px 30px;
+  }
+  .cover-sub-title {
+    font-weight: bold;
+  }
+  .new-page {
+    page-break-before: always;
+  }
 }
