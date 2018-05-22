@@ -1,7 +1,7 @@
 # compliance-auditing-portal-front-end
 A front end of a web platform for Namibian energy Company Electricity Control Board
 
-#Installation
+# Installation
 
 install npm from https://www.npmjs.com/
 
@@ -19,7 +19,7 @@ start developementserver:
 
 access site on http://localhost:3000
 
-#Development
+# Development
 
 When editing `.scss` files, either run `npm run watch-css` at a separate window or rerun `npm start after finished editing.
 
