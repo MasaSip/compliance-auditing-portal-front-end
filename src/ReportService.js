@@ -1,9 +1,6 @@
 import axios from 'axios';
 import _ from 'lodash';
 
-const username = 'User';
-const password = 'password';
-
 const fieldToApi = {
   reportTitle: 'name',
   // firstName:
@@ -29,11 +26,19 @@ class ReportService {
     this.reportByIdPath = id => (`/api/reports/${id}?projection=embedded`);
     this.config = {
       auth: {
-        username,
-        password,
+        username: '',
+        password: '',
       },
     };
   }
+
+  setCredentials(username, password) {
+    this.config.auth = {
+      username,
+      password,
+    };
+  }
+
 
   findUserByUserName(user) {
     const path = `${this.findByUsername}?username=${user}`;
@@ -50,7 +55,12 @@ class ReportService {
   }
 
   validateUser(user) {
-    return this.findUserByUserName(user).then(res => res.data._links.self.href);
+    return this.findUserByUserName(user).then((res) => {
+      if (res) {
+        return res.data._links.self.href;
+      }
+      return null;
+    });
   }
 
   getReportList() {
@@ -67,7 +77,7 @@ class ReportService {
       }
     });
     console.log(data);
-    return this.validateUser(username)
+    return this.validateUser(this.config.auth.username)
       .then((userUri) => {
         data.user = userUri;
         return this.api.post(this.reportPath, data, this.config);

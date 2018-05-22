@@ -21,7 +21,14 @@ class App extends Component {
     // uncomment the following line if you want to test a local backend.
     this.apiUrl = 'http://localhost:8080';
     this.reportService = new ReportService(this.apiUrl);
+    this.setAuthStatus = this.setAuthStatus.bind(this);
   }
+
+  setAuthStatus(authenticated) {
+    console.log(this.setState);
+    this.setState({ authenticated });
+  }
+
   render() {
     const Header = () => (
       <Navbar expand="md" className="bg-light">
@@ -71,7 +78,10 @@ class App extends Component {
             <h1 className="App-title">Welcome to Electricity Control Board</h1>
             <br />
           </header>
-          <Login apiUrl={this.apiUrl} />
+          <Login
+            reportService={this.reportService}
+            setAuthStatus={this.setAuthStatus}
+          />
         </div>
       );
     };
