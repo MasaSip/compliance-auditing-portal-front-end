@@ -16,8 +16,24 @@ class PreviewReportPage extends Component {
         <h1>{(this.state.licensee ? this.state.licensee.toUpperCase() : '')} TECHNICAL COMPLIANCE AUDITING REPORT</h1>
         <div className="front-page-info">
           <Row>
-            <Col md="2" className="cover-sub-title">Audit Period:</Col>
-            <Col md="2">18.5.2018</Col>
+            <Col md="6" className="cover-sub-title">Audit Period:</Col>
+            <Col md="6" className="cover-content">18.5.2018</Col>
+          </Row>
+          <Row>
+            <Col md="6" className="cover-sub-title">Compliance Monitoring Engineer:</Col>
+            <Col md="6" className="cover-content">Example Name</Col>
+          </Row>
+          <Row>
+            <Col md="6" className="cover-sub-title">Senior Engineer: Technical Regulation:</Col>
+            <Col md="6" className="cover-content">{this.state.senior_engineer_email}</Col>
+          </Row>
+          <Row>
+            <Col md="6" className="cover-sub-title">Manager: Technical Regulation:</Col>
+            <Col md="6" className="cover-content">{this.state.general_manager_email}</Col>
+          </Row>
+          <Row>
+            <Col md="6" className="cover-sub-title">General Manager: Technical Regulation:</Col>
+            <Col md="6" className="cover-content">{this.state.ceo_email}</Col>
           </Row>
         </div>
         <h2 className="new-page">1. Background</h2>
